@@ -35,7 +35,7 @@ class MarkovMachine {
       if (currWord in chain) {
         chain[currWord].push(this.words[i + 1] || null);
       } else {
-        chain[currWord] = [this.words[i + 1]];
+        chain[currWord] = [this.words[i + 1] || null] ;
       }
     }
 
@@ -47,11 +47,21 @@ class MarkovMachine {
    *  until it hits a null choice. */
 
   getText() {
-    // TODO: implement this!
 
-    // - start at the first word in the input text
-    // - find a random word from the following-words of that
-    // - repeat until reaching the terminal null
+    let result = [this.words[0]];
+    let lastWord = this.words[0];
+
+    while(lastWord !== null){
+      let possibleWords = this.chains[lastWord];
+      let random = Math.floor(Math.random() * possibleWords.length);
+      lastWord = possibleWords[random];
+
+      if(lastWord !== null){
+        result.push(lastWord);
+      }
+
+    }
+    return result.join(" ");
   }
 }
 
