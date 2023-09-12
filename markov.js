@@ -15,7 +15,7 @@ class MarkovMachine {
   /** Get markov chain: returns object of Markov chains.
    *
    *  For text of "The cat in the hat.", chains will be:
-   * 
+   *
    *  {
    *   "The": ["cat"],
    *   "cat": ["in"],
@@ -23,11 +23,23 @@ class MarkovMachine {
    *   "the": ["hat."],
    *   "hat.": [null],
    *  }
-   * 
+   *
    * */
 
   getChains() {
-    // TODO: implement this!
+    const chain = {};
+
+    for (let i = 0; i < this.words.length; i++) {
+      const currWord = this.words[i];
+
+      if (currWord in chain) {
+        chain[currWord].push(this.words[i + 1] || null);
+      } else {
+        chain[currWord] = [this.words[i + 1]];
+      }
+    }
+
+    return chain;
   }
 
 
@@ -41,4 +53,8 @@ class MarkovMachine {
     // - find a random word from the following-words of that
     // - repeat until reaching the terminal null
   }
+}
+
+module.exports = {
+  MarkovMachine,
 }
