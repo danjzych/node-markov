@@ -1,3 +1,4 @@
+"use strict";
 /** Textual markov chain generator. */
 
 
@@ -27,19 +28,20 @@ class MarkovMachine {
    * */
 
   getChains() {
-    const chain = {};
+    const chains = {};
 
     for (let i = 0; i < this.words.length; i++) {
       const currWord = this.words[i];
+      const nextWord = this.words[i + 1]
 
-      if (currWord in chain) {
-        chain[currWord].push(this.words[i + 1] || null);
+      if (currWord in chains) {
+        chains[currWord].push(nextWord || null);
       } else {
-        chain[currWord] = [this.words[i + 1] || null] ;
+        chains[currWord] = [nextWord || null] ;
       }
     }
 
-    return chain;
+    return chains;
   }
 
 
@@ -48,22 +50,25 @@ class MarkovMachine {
 
   getText() {
 
-    let result = [this.words[0]];
+    let result = [];
     let lastWord = this.words[0];
 
     while(lastWord !== null){
-      let possibleWords = this.chains[lastWord];
-      let random = Math.floor(Math.random() * possibleWords.length);
-      lastWord = possibleWords[random];
+      result.push(lastWord);
 
-      if(lastWord !== null){
-        result.push(lastWord);
-      }
+      let possibleWords = this.chains[lastWord];
+      let random = this.getRandom(possibleWords);
+      lastWord = possibleWords[random];
 
     }
     return result.join(" ");
   }
+
+  getRandom(words){
+    return Math.floor(Math.random() * words.length)
+  }
 }
+
 
 module.exports = {
   MarkovMachine,
