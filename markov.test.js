@@ -47,6 +47,8 @@ describe('getChains', function () {
     })
 
     test('text starts with correct word', function() {
+      //TODO:can assert that the text you got from generator contains the first word
+        //expect().toContain()
       const testFirstWord = text.split(' ')[0];
 
       expect(testFirstWord).toEqual(firstWord);
@@ -57,6 +59,7 @@ describe('getChains', function () {
       const testSecondWord = text.split(' ')[1];
 
       const containsWord = chain[testFirstWord].includes(testSecondWord);
+      //TODO: could refactor with 'toBeTrue()';
       expect(containsWord).toEqual(true);
     });
 
@@ -66,4 +69,8 @@ describe('getChains', function () {
       const containsNull = chain[testLastWord].includes(null);
       expect(containsNull).toEqual(true);
     });
+
+    //TODO: could have another test to see that text you get back is valid text
+      //could also do a test with a source that produces only one potential outcome
+
 });
